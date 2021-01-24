@@ -1,5 +1,6 @@
 package com.example.mvvmweekend.view.home;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -9,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.mvvmweekend.R;
 import com.example.mvvmweekend.data.models.Article;
 import com.example.mvvmweekend.data.models.ArticleListResponse;
 import com.example.mvvmweekend.view.articleDetail.ArticleDetailActivity;
 import com.example.mvvmweekend.view.home.adapter.ArticleAdapter;
+import com.example.mvvmweekend.view.mutableArticle.MutableActivity;
 
 import java.util.ArrayList;
 
@@ -60,5 +64,26 @@ public class MainActivity extends AppCompatActivity {
                 adapter.setData(articleListResponse.getArticleList());
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        fetchDataFromAPI();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.add){
+            startActivity(new Intent(this, MutableActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+
     }
 }
